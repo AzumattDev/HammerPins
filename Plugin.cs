@@ -52,8 +52,8 @@ namespace HammerPins
 
             IconsToPin.SettingChanged += (_, _) =>
             {
-                Array.Clear(DisplayPinsOnMap.prefabArray, 0, DisplayPinsOnMap.prefabArray.Length);
-                DisplayPinsOnMap.prefabArray = IconsToPin.Value.Trim().Split(',').ToArray();
+                Array.Clear(DisplayPinsOnMap.PrefabArray, 0, DisplayPinsOnMap.PrefabArray.Length);
+                DisplayPinsOnMap.PrefabArray = IconsToPin.Value.Trim().Split(',').ToArray();
             };
 
 
@@ -126,7 +126,7 @@ namespace HammerPins
         private sealed class ConfigurationManagerAttributes
         {
             //public bool? Browsable = false;
-            public Action<ConfigEntryBase> CustomDrawer;
+            public Action<ConfigEntryBase> CustomDrawer = null!;
         }
 
         static void MyDrawer(ConfigEntryBase entry)

@@ -12,7 +12,7 @@ public class DisplayPinsOnMap
     private static readonly Dictionary<int, Sprite> icons = new();
     private static readonly int hammerHashCode = "Hammer".GetStableHashCode();
     private static readonly float updateInterval = 5.0f;
-    internal static string[] prefabArray;
+    internal static string[] PrefabArray = null!;
 
     // clear dictionary if the user logs out
     [HarmonyPatch(typeof(Minimap), nameof(Minimap.OnDestroy))]
@@ -22,7 +22,7 @@ public class DisplayPinsOnMap
         {
             customPins.Clear();
             icons.Clear();
-            Array.Clear(prefabArray, 0, prefabArray.Length);
+            Array.Clear(PrefabArray, 0, PrefabArray.Length);
         }
     }
 
@@ -43,13 +43,13 @@ public class DisplayPinsOnMap
                 return;
             if (HammerPinsPlugin.IconsToPin != null && HammerPinsPlugin.IconsToPin.Value.Length > 0)
             {
-                prefabArray = HammerPinsPlugin.IconsToPin.Value.Trim().Split(',').ToArray();
+                PrefabArray = HammerPinsPlugin.IconsToPin.Value.Trim().Split(',').ToArray();
             }
             else
             {
                 customPins.Clear();
                 icons.Clear();
-                Array.Clear(prefabArray, 0, prefabArray.Length);
+                Array.Clear(PrefabArray, 0, PrefabArray.Length);
                 return;
             }
 
@@ -64,7 +64,7 @@ public class DisplayPinsOnMap
                 if (zdoarray != null)
                     foreach (ZDO zdo in zdoarray)
                     {
-                        foreach (string prefab in prefabArray)
+                        foreach (string prefab in PrefabArray)
                         {
                             if (CheckPin(__instance, player, zdo, prefab.GetStableHashCode(), ""))
                                 continue;
